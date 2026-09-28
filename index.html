@@ -1,0 +1,555 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Gym Renewal Reminders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#F2F4F1; --surface:#FBFCFA; --panel:#E7EBE5;
+    --ink:#16201B; --muted:#5D6B62; --rule:#CBD4C9;
+    --accent:#0E6E45; --accent-soft:#DAEEE2;
+    --warn:#8F5C10; --danger:#9E382A;
+    --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --disp:"Familjen Grotesk","IBM Plex Sans",-apple-system,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#11150F; --surface:#191E18; --panel:#222922;
+      --ink:#E8EDE6; --muted:#94A296; --rule:#333C33;
+      --accent:#4ED18A; --accent-soft:#16301F;
+      --warn:#DFAC5C; --danger:#E8705E;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#11150F; --surface:#191E18; --panel:#222922;
+    --ink:#E8EDE6; --muted:#94A296; --rule:#333C33;
+    --accent:#4ED18A; --accent-soft:#16301F;
+    --warn:#DFAC5C; --danger:#E8705E;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:var(--sans); font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px; margin:0 auto; padding-inline:20px; padding-block:0 72px}
+
+  /* ---------- masthead ---------- */
+  header.mast{padding-block:56px 40px; border-bottom:1px solid var(--rule)}
+  .kicker{
+    font-family:var(--mono); font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); margin:0 0 14px;
+  }
+  h1{
+    font-family:var(--disp); font-weight:700; font-size:clamp(30px,5.6vw,50px);
+    line-height:1.04; letter-spacing:-.02em; margin:0; text-wrap:balance;
+  }
+  .dek{max-width:62ch; color:var(--muted); margin:16px 0 0; font-size:16.5px}
+  .facts{
+    display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; padding:0; list-style:none;
+  }
+  .facts li{
+    font-family:var(--mono); font-size:11.5px; color:var(--muted);
+    border:1px solid var(--rule); border-radius:2px; padding:5px 9px; background:var(--surface);
+  }
+  .facts b{color:var(--ink); font-weight:500}
+
+  /* ---------- figures ---------- */
+  section.fig{padding-block:52px; border-bottom:1px solid var(--rule)}
+  section.fig:last-of-type{border-bottom:0}
+  .eyebrow{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--muted); margin:0 0 8px;
+  }
+  h2{
+    font-family:var(--disp); font-weight:600; font-size:clamp(21px,3vw,27px);
+    letter-spacing:-.01em; line-height:1.18; margin:0 0 12px; text-wrap:balance;
+  }
+  .lede{max-width:66ch; margin:0 0 28px; color:var(--muted)}
+  .lede strong{color:var(--ink); font-weight:500}
+  figure{margin:0}
+  .scroller{
+    overflow-x:auto; background:var(--surface);
+    border:1px solid var(--rule); border-radius:3px; padding:18px 16px;
+  }
+  figcaption{
+    margin-top:14px; font-size:14px; color:var(--muted); max-width:72ch;
+  }
+  figcaption code, p code, li code{
+    font-family:var(--mono); font-size:.88em; color:var(--ink);
+    background:var(--panel); padding:1px 4px; border-radius:2px;
+  }
+  .notes{margin:26px 0 0; padding:0; list-style:none; max-width:70ch}
+  .notes li{
+    display:grid; grid-template-columns:auto 1fr; gap:12px;
+    padding-block:9px; border-top:1px solid var(--rule); font-size:14.5px;
+  }
+  .notes li:last-child{border-bottom:1px solid var(--rule)}
+  .notes .k{
+    font-family:var(--mono); font-size:11px; letter-spacing:.04em;
+    text-transform:uppercase; color:var(--muted); padding-top:4px; white-space:nowrap;
+  }
+
+  /* ---------- shared svg styling ---------- */
+  .dg{display:block; height:auto; max-width:100%}
+  .dg-wide{min-width:820px}
+  .dg-tall{min-width:640px}
+  .dg .box{fill:var(--surface); stroke:var(--rule); stroke-width:1.5}
+  .dg .shell{fill:var(--panel); stroke:none}
+  .dg .gate{fill:var(--panel); stroke:var(--rule); stroke-width:1.5}
+  .dg .acc{fill:var(--accent-soft); stroke:var(--accent); stroke-width:1.5}
+  .dg .link{stroke:var(--ink); stroke-width:1.5; fill:none}
+  .dg .link.dash{stroke-dasharray:5 4}
+  .dg .link.g{stroke:var(--accent); stroke-width:2}
+  .dg .grid{stroke:var(--rule); stroke-width:1; fill:none}
+  .dg text{fill:var(--ink); font-family:var(--mono); font-size:12px}
+  .dg .t{font-family:var(--sans); font-size:13px; font-weight:600}
+  .dg .sm{font-size:11px; fill:var(--muted)}
+  .dg .eb{font-size:10px; letter-spacing:.11em; fill:var(--muted)}
+  .dg .g{fill:var(--accent)}
+  .dg .mono-row{font-size:10.5px; fill:var(--muted)}
+  .dg marker path{fill:var(--ink); stroke:none}
+  .dg marker.mg path{fill:var(--accent); stroke:none}
+  .dg .band{fill:var(--accent); opacity:.16; stroke:none}
+  .dg .bar{fill:var(--accent); opacity:.85; stroke:none}
+  .dg .hatchbox{stroke:var(--muted); stroke-width:1}
+  .dg .hl{stroke:var(--muted); stroke-width:1}
+
+  @media (max-width:520px){
+    body{font-size:15.5px}
+    .scroller{padding:12px 10px}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <p class="kicker">Architecture · v1</p>
+    <h1>Gym Renewal Reminders</h1>
+    <p class="dek">
+      Four drawings of the same system, each answering one question a developer
+      will actually ask before writing code: where does data flow, what decides
+      who gets messaged, how does a freeze move a date, and what is stored.
+    </p>
+    <ul class="facts">
+      <li><b>Next.js</b> on Vercel</li>
+      <li><b>Postgres</b> on Supabase</li>
+      <li><b>WhatsApp Cloud API</b> (Meta)</li>
+      <li>1 owner · <b>2–5 branches</b></li>
+      <li>Reminders at <b>−7d / 0 / +3d</b></li>
+      <li><b>₹0</b> per month</li>
+    </ul>
+  </header>
+
+  <!-- ══════════════════ 1. TOPOLOGY ══════════════════ -->
+  <section class="fig">
+    <p class="eyebrow">Topology</p>
+    <h2>What talks to what</h2>
+    <p class="lede">
+      Everything green is the message path — the only part of the system that
+      reaches a member's phone. Note that <strong>nothing the owner does sends a
+      message</strong>: the owner writes to the database, and a separate clock
+      reads it. That separation is what makes the system work while the gym is shut.
+    </p>
+
+    <figure>
+      <div class="scroller">
+        <svg class="dg dg-wide" viewBox="0 0 980 560" role="img"
+             aria-label="System topology: the gym owner's browser talks to a Next.js app on Vercel, which reads and writes a Supabase Postgres database. A separate Vercel Cron job calls the same backend once a day, which then posts template messages to the WhatsApp Cloud API for delivery to members, and receives delivery-status webhooks back.">
+          <defs>
+            <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0.5 L10,5 L0,9.5 Z"/>
+            </marker>
+            <marker id="a1g" class="mg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0.5 L10,5 L0,9.5 Z"/>
+            </marker>
+          </defs>
+
+          <!-- Vercel shell -->
+          <rect class="shell" x="248" y="28" width="336" height="330" rx="4"/>
+          <text class="eb" x="264" y="50">VERCEL · HOBBY (FREE)</text>
+
+          <!-- Supabase shell -->
+          <rect class="shell" x="724" y="28" width="228" height="330" rx="4"/>
+          <text class="eb" x="740" y="50">SUPABASE · FREE</text>
+
+          <!-- Owner -->
+          <rect class="box" x="28" y="66" width="172" height="78" rx="3"/>
+          <text class="t" x="44" y="98">Gym owner</text>
+          <text class="sm" x="44" y="118">phone browser,</text>
+          <text class="sm" x="44" y="133">added to home screen</text>
+
+          <!-- Frontend -->
+          <rect class="box" x="268" y="66" width="296" height="78" rx="3"/>
+          <text class="t" x="286" y="96">Next.js UI</text>
+          <text class="sm" x="286" y="116">members · record payment · freeze</text>
+          <text class="sm" x="286" y="132">dashboard · reminder log</text>
+
+          <!-- Backend -->
+          <rect class="box" x="268" y="196" width="296" height="142" rx="3"/>
+          <text class="t" x="286" y="224">API routes</text>
+          <text class="mono-row" x="286" y="248">/api/members · /api/payments</text>
+          <text class="mono-row" x="286" y="266">/api/freezes</text>
+          <text class="mono-row" x="286" y="284">/api/cron/reminders</text>
+          <text class="mono-row" x="286" y="302">/api/webhooks/whatsapp</text>
+          <text class="sm" x="286" y="325">expiry engine lives here</text>
+
+          <!-- Database -->
+          <rect class="box" x="744" y="66" width="188" height="272" rx="3"/>
+          <text class="t" x="760" y="96">Postgres</text>
+          <text class="mono-row" x="760" y="122">branches</text>
+          <text class="mono-row" x="760" y="140">members</text>
+          <text class="mono-row" x="760" y="158">payments</text>
+          <text class="mono-row" x="760" y="176">freezes</text>
+          <text class="mono-row" x="760" y="194">reminder_log</text>
+          <line class="grid" x1="760" y1="212" x2="916" y2="212"/>
+          <text class="sm" x="760" y="234">Supabase Auth</text>
+          <text class="sm" x="760" y="252">row level security on</text>
+          <text class="sm" x="760" y="278">daily cron also keeps</text>
+          <text class="sm" x="760" y="294">the free tier awake</text>
+
+          <!-- Cron -->
+          <rect class="box" x="28" y="250" width="172" height="88" rx="3"/>
+          <text class="t" x="44" y="278">Vercel Cron</text>
+          <text class="sm" x="44" y="299">03:30 UTC</text>
+          <text class="sm" x="44" y="315">= 09:00 IST</text>
+
+          <!-- WhatsApp -->
+          <rect class="acc" x="268" y="404" width="296" height="76" rx="3"/>
+          <text class="t g" x="286" y="432">WhatsApp Cloud API</text>
+          <text class="sm" x="286" y="454">approved template · ~1,000 free/mo</text>
+
+          <!-- Member -->
+          <rect class="acc" x="744" y="404" width="188" height="76" rx="3"/>
+          <text class="t g" x="760" y="432">Member's phone</text>
+          <text class="sm" x="760" y="454">gets the reminder</text>
+
+          <!-- arrows -->
+          <line class="link" x1="200" y1="105" x2="262" y2="105" marker-end="url(#a1)"/>
+          <text class="sm" x="231" y="94" text-anchor="middle">logs in</text>
+
+          <line class="link" x1="416" y1="144" x2="416" y2="190" marker-end="url(#a1)"/>
+          <text class="sm" x="428" y="172">saves a member</text>
+
+          <line class="link" x1="564" y1="240" x2="738" y2="240" marker-end="url(#a1)" marker-start="url(#a1)"/>
+          <text class="sm" x="651" y="229" text-anchor="middle">SQL read / write</text>
+
+          <line class="link" x1="200" y1="294" x2="262" y2="294" marker-end="url(#a1)"/>
+          <text class="sm" x="231" y="283" text-anchor="middle">once a day</text>
+          <text class="sm" x="231" y="316" text-anchor="middle">cron secret</text>
+
+          <line class="link g" x1="330" y1="338" x2="330" y2="398" marker-end="url(#a1g)"/>
+          <text class="sm" x="342" y="366">POST message</text>
+
+          <line class="link dash" x1="502" y1="398" x2="502" y2="338" marker-end="url(#a1)"/>
+          <text class="sm" x="514" y="366">status back</text>
+
+          <line class="link g" x1="564" y1="442" x2="738" y2="442" marker-end="url(#a1g)"/>
+          <text class="sm" x="651" y="431" text-anchor="middle">renewal reminder</text>
+        </svg>
+      </div>
+      <figcaption>
+        The dashed arrow is the only asynchronous hop: Meta posts delivery,
+        read and failure receipts to <code>/api/webhooks/whatsapp</code> minutes
+        or hours later, and those land in <code>reminder_log</code> so the owner
+        can see that a reminder actually arrived.
+      </figcaption>
+    </figure>
+
+    <ul class="notes">
+      <li><span class="k">One deploy</span><span>Frontend and backend are the same Next.js project, so there is no second server to run, secure or pay for.</span></li>
+      <li><span class="k">Two entry points</span><span>A human request (owner) and a scheduled request (cron) hit the same API layer. The expiry engine is shared, so the dashboard and the reminders can never disagree about a date.</span></li>
+      <li><span class="k">Timezone</span><span>Serverless cron fires in UTC. <code>03:30 UTC</code> is the 09:00 IST slot — getting this wrong is the most common bug in this class of system.</span></li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════ 2. DAILY JOB ══════════════════ -->
+  <section class="fig">
+    <p class="eyebrow">Daily job</p>
+    <h2>How the system decides who to message</h2>
+    <p class="lede">
+      This is the whole product in one flow. The two gates are what separate a
+      system the owner trusts from one that spams paying members — the first
+      catches members who already renewed, the second makes the job
+      <strong>safe to run twice</strong>.
+    </p>
+
+    <figure>
+      <div class="scroller">
+        <svg class="dg dg-tall" viewBox="0 0 740 690" role="img"
+             aria-label="Daily cron flow: the job wakes at 9am IST, queries members whose expiry date equals today minus each offset, then passes each member through two gates — already renewed, and already logged — before building template variables, posting to WhatsApp and writing a reminder log row. Failures are logged and retried the next day.">
+          <defs>
+            <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0.5 L10,5 L0,9.5 Z"/>
+            </marker>
+            <marker id="a2g" class="mg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0.5 L10,5 L0,9.5 Z"/>
+            </marker>
+          </defs>
+
+          <!-- start -->
+          <rect class="box" x="110" y="20" width="280" height="46" rx="23"/>
+          <text class="t" x="250" y="49" text-anchor="middle">09:00 IST — job wakes</text>
+
+          <!-- query -->
+          <rect class="box" x="110" y="104" width="280" height="80" rx="3"/>
+          <text class="t" x="128" y="130">Find today's candidates</text>
+          <text class="mono-row" x="128" y="152">for offset in (−7, 0, +3):</text>
+          <text class="mono-row" x="128" y="170">expiry_date == today − offset</text>
+
+          <!-- gate 1 -->
+          <rect class="gate" x="110" y="222" width="280" height="72" rx="3"/>
+          <text class="eb" x="128" y="244">GATE 1</text>
+          <text class="t" x="128" y="266">Already renewed?</text>
+          <text class="mono-row" x="128" y="284">payment.paid_on &gt; cycle_start</text>
+
+          <!-- gate 2 -->
+          <rect class="gate" x="110" y="332" width="280" height="72" rx="3"/>
+          <text class="eb" x="128" y="354">GATE 2</text>
+          <text class="t" x="128" y="376">Already messaged?</text>
+          <text class="mono-row" x="128" y="394">row in reminder_log for this cycle</text>
+
+          <!-- build -->
+          <rect class="box" x="110" y="442" width="280" height="62" rx="3"/>
+          <text class="t" x="128" y="468">Fill the template</text>
+          <text class="sm" x="128" y="489">name · plan · branch · expiry · ₹ · date</text>
+
+          <!-- send -->
+          <rect class="acc" x="110" y="542" width="280" height="54" rx="3"/>
+          <text class="t g" x="128" y="567">Send via WhatsApp</text>
+          <text class="sm" x="128" y="585">one template message</text>
+
+          <!-- log -->
+          <rect class="box" x="110" y="626" width="280" height="50" rx="3"/>
+          <text class="t" x="128" y="650">Write reminder_log</text>
+          <text class="sm" x="128" y="668">status = sent · store wa_message_id</text>
+
+          <!-- spine -->
+          <line class="link" x1="250" y1="66" x2="250" y2="98" marker-end="url(#a2)"/>
+          <line class="link" x1="250" y1="184" x2="250" y2="216" marker-end="url(#a2)"/>
+          <line class="link" x1="250" y1="294" x2="250" y2="326" marker-end="url(#a2)"/>
+          <text class="sm" x="262" y="315">no</text>
+          <line class="link" x1="250" y1="404" x2="250" y2="436" marker-end="url(#a2)"/>
+          <text class="sm" x="262" y="425">no</text>
+          <line class="link" x1="250" y1="504" x2="250" y2="536" marker-end="url(#a2)"/>
+          <line class="link g" x1="250" y1="596" x2="250" y2="620" marker-end="url(#a2g)"/>
+
+          <!-- skip branches -->
+          <rect class="box" x="470" y="226" width="250" height="64" rx="3"/>
+          <text class="t" x="486" y="252">No message</text>
+          <text class="sm" x="486" y="272">they've already paid</text>
+
+          <rect class="box" x="470" y="336" width="250" height="64" rx="3"/>
+          <text class="t" x="486" y="362">No message</text>
+          <text class="sm" x="486" y="382">this stage already went out</text>
+
+          <line class="link" x1="390" y1="258" x2="464" y2="258" marker-end="url(#a2)"/>
+          <text class="sm" x="427" y="247" text-anchor="middle">yes</text>
+          <line class="link" x1="390" y1="368" x2="464" y2="368" marker-end="url(#a2)"/>
+          <text class="sm" x="427" y="357" text-anchor="middle">yes</text>
+
+          <!-- failure branch -->
+          <rect class="box" x="470" y="540" width="250" height="64" rx="3"/>
+          <text class="t" x="486" y="566">status = failed</text>
+          <text class="sm" x="486" y="586">retried tomorrow · max 3 tries</text>
+          <line class="link dash" x1="390" y1="569" x2="464" y2="569" marker-end="url(#a2)"/>
+          <text class="sm" x="427" y="558" text-anchor="middle">error</text>
+        </svg>
+      </div>
+      <figcaption>
+        Gate 2 is enforced in the database, not in code — a
+        <code>UNIQUE (member_id, cycle_start_date, offset_days)</code> constraint
+        on <code>reminder_log</code>. Even if the job runs twice, or two runs
+        overlap, the second insert fails and no duplicate message goes out.
+      </figcaption>
+    </figure>
+
+    <ul class="notes">
+      <li><span class="k">Dry run first</span><span>Ship the endpoint with a <code>?dry=1</code> mode that logs who <em>would</em> be messaged. Check that list against the register by hand before ever letting it send.</span></li>
+      <li><span class="k">Order matters</span><span>Gate 1 before gate 2. Checking payment first means a renewal silently cancels the remaining <code>0</code> and <code>+3</code> stages with no cleanup job.</span></li>
+      <li><span class="k">Volume</span><span>300 members × 3 stages is ~900 conversations a month worst case, inside Meta's free tier — and far lower in practice, because renewals cancel the later stages.</span></li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════ 3. DATE ENGINE ══════════════════ -->
+  <section class="fig">
+    <p class="eyebrow">Date engine</p>
+    <h2>Why a freeze moves all three reminders</h2>
+    <p class="lede">
+      The expiry date is never typed in — it is <strong>calculated</strong> from
+      the cycle start, the plan length, and the days the member was frozen. Add
+      a freeze and every downstream reminder shifts by itself. There is nothing
+      to back-fill.
+    </p>
+
+    <figure>
+      <div class="scroller">
+        <svg class="dg dg-wide" viewBox="0 0 980 430" role="img"
+             aria-label="Two timelines for a 3-month plan starting 1 April. Without a freeze it expires 1 July, with reminders on 24 June, 1 July and 4 July. With a 10-day freeze from 10 to 20 May, expiry moves to 11 July and all three reminders shift 10 days later, to 4, 11 and 14 July.">
+          <defs>
+            <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0.5 L10,5 L0,9.5 Z"/>
+            </marker>
+            <pattern id="frz" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+              <line class="hl" x1="0" y1="0" x2="0" y2="7"/>
+            </pattern>
+          </defs>
+
+          <!-- month gridlines -->
+          <line class="grid" x1="90" y1="76" x2="90" y2="346"/>
+          <line class="grid" x1="318" y1="76" x2="318" y2="346"/>
+          <line class="grid" x1="554" y1="76" x2="554" y2="346"/>
+          <line class="grid" x1="782" y1="76" x2="782" y2="346"/>
+          <text class="sm" x="90" y="368" text-anchor="middle">1 Apr</text>
+          <text class="sm" x="318" y="368" text-anchor="middle">1 May</text>
+          <text class="sm" x="554" y="368" text-anchor="middle">1 Jun</text>
+          <text class="sm" x="782" y="368" text-anchor="middle">1 Jul</text>
+
+          <!-- row 1 -->
+          <text class="eb" x="90" y="58">PLAN AS SOLD — 3 MONTHS, NO FREEZE</text>
+          <rect class="bar" x="90" y="96" width="692" height="22" rx="2"/>
+          <text class="sm" x="436" y="112" text-anchor="middle" style="fill:var(--surface)">91 days of access</text>
+          <line class="link" x1="728" y1="88" x2="728" y2="128"/>
+          <line class="link" x1="782" y1="84" x2="782" y2="128"/>
+          <line class="link" x1="805" y1="88" x2="805" y2="128"/>
+          <text class="sm" x="728" y="146" text-anchor="middle">−7d</text>
+          <text class="t" x="782" y="78" text-anchor="middle">expires 1 Jul</text>
+          <text class="sm" x="812" y="146">+3d</text>
+
+          <!-- row 2 -->
+          <text class="eb" x="90" y="198">SAME MEMBER — 10 DAYS FROZEN IN MAY</text>
+          <rect class="bar" x="90" y="236" width="296" height="22" rx="2"/>
+          <rect x="386" y="236" width="76" height="22" fill="url(#frz)" class="hatchbox"/>
+          <rect class="bar" x="462" y="236" width="396" height="22" rx="2"/>
+          <text class="sm" x="424" y="228" text-anchor="middle">frozen</text>
+          <line class="link" x1="805" y1="228" x2="805" y2="268"/>
+          <line class="link" x1="858" y1="224" x2="858" y2="268"/>
+          <line class="link" x1="881" y1="228" x2="881" y2="268"/>
+          <text class="sm" x="805" y="286" text-anchor="middle">−7d</text>
+          <text class="t" x="858" y="218" text-anchor="middle">expires 11 Jul</text>
+          <text class="sm" x="888" y="286">+3d</text>
+
+          <!-- shift connector -->
+          <line class="link dash" x1="782" y1="128" x2="782" y2="312"/>
+          <line class="link dash" x1="858" y1="268" x2="858" y2="312"/>
+          <line class="link" x1="782" y1="312" x2="854" y2="312" marker-end="url(#a3)"/>
+          <text class="sm g" x="818" y="330" text-anchor="middle">+10 days</text>
+        </svg>
+      </div>
+      <figcaption>
+        <code>expiry = cycle_start + plan_months + frozen_days</code>. Write this
+        once as a pure function and unit-test it against four cases: no freeze,
+        a finished freeze, a freeze still running, and a renewal part-way through
+        a cycle. Everything else in the system reads its answer.
+      </figcaption>
+    </figure>
+
+    <ul class="notes">
+      <li><span class="k">Cached, not stored</span><span>Keep the result in <code>members.expiry_date</code> and recompute it on every write. The daily job then needs one indexed date lookup instead of a calculation across every member.</span></li>
+      <li><span class="k">Still frozen</span><span>A member with an open freeze is skipped by the job entirely — their clock isn't running, so they can't be expiring.</span></li>
+      <li><span class="k">Open question</span><span>On renewal, does the new cycle start from the old expiry date or from the day they paid? Both are one line; it decides whether late payers lose those days.</span></li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════ 4. DATA MODEL ══════════════════ -->
+  <section class="fig">
+    <p class="eyebrow">Data model</p>
+    <h2>Five tables, one guard</h2>
+    <p class="lede">
+      Payments and freezes are kept as <strong>separate rows, not edited fields</strong>,
+      so the history stays intact and the expiry date can always be recomputed
+      from scratch. <code>reminder_log</code> is both the audit trail the owner
+      reads and the lock that prevents duplicates.
+    </p>
+
+    <figure>
+      <div class="scroller">
+        <svg class="dg dg-wide" viewBox="0 0 980 570" role="img"
+             aria-label="Entity diagram: branches has many members; members has many payments, many freezes and many reminder log rows. The reminder log carries a unique constraint on member, cycle start date and offset days.">
+          <defs>
+            <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0.5 L10,5 L0,9.5 Z"/>
+            </marker>
+          </defs>
+
+          <!-- branches -->
+          <rect class="box" x="30" y="188" width="190" height="112" rx="3"/>
+          <text class="t" x="46" y="214">branches</text>
+          <line class="grid" x1="30" y1="226" x2="220" y2="226"/>
+          <text class="mono-row" x="46" y="248">id</text>
+          <text class="mono-row" x="46" y="266">name</text>
+          <text class="mono-row" x="46" y="284">address · phone</text>
+
+          <!-- members -->
+          <rect class="box" x="320" y="146" width="290" height="196" rx="3"/>
+          <text class="t" x="336" y="172">members</text>
+          <line class="grid" x1="320" y1="184" x2="610" y2="184"/>
+          <text class="mono-row" x="336" y="206">id · branch_id</text>
+          <text class="mono-row" x="336" y="224">name · phone (E.164)</text>
+          <text class="mono-row" x="336" y="242">plan_months · fee_amount</text>
+          <text class="mono-row" x="336" y="260">discount_type · discount_value</text>
+          <text class="mono-row" x="336" y="278">cycle_start_date</text>
+          <text class="mono-row g" x="336" y="296">expiry_date ← calculated</text>
+          <text class="mono-row" x="336" y="314">status · notes</text>
+          <text class="sm" x="336" y="334">index: (expiry_date, status)</text>
+
+          <!-- payments -->
+          <rect class="box" x="710" y="36" width="238" height="118" rx="3"/>
+          <text class="t" x="726" y="62">payments</text>
+          <line class="grid" x1="710" y1="74" x2="948" y2="74"/>
+          <text class="mono-row" x="726" y="96">amount_paid · discount_applied</text>
+          <text class="mono-row" x="726" y="114">paid_on · covers_months</text>
+          <text class="mono-row" x="726" y="132">mode (cash / upi / card)</text>
+
+          <!-- freezes -->
+          <rect class="box" x="710" y="196" width="238" height="118" rx="3"/>
+          <text class="t" x="726" y="222">freezes</text>
+          <line class="grid" x1="710" y1="234" x2="948" y2="234"/>
+          <text class="mono-row" x="726" y="256">start_date · end_date</text>
+          <text class="mono-row" x="726" y="274">reason</text>
+          <text class="mono-row" x="726" y="292">days_counted</text>
+
+          <!-- reminder_log -->
+          <rect class="acc" x="320" y="400" width="440" height="140" rx="3"/>
+          <text class="t g" x="336" y="426">reminder_log</text>
+          <line class="grid" x1="320" y1="438" x2="760" y2="438"/>
+          <text class="mono-row" x="336" y="460">member_id · cycle_start_date · offset_days</text>
+          <text class="mono-row" x="336" y="478">wa_message_id · status · error_message</text>
+          <text class="mono-row" x="336" y="496">sent_at</text>
+          <line class="grid" x1="336" y1="510" x2="744" y2="510"/>
+          <text class="mono-row g" x="336" y="530">UNIQUE (member_id, cycle_start_date, offset_days)</text>
+
+          <!-- relations -->
+          <line class="link" x1="220" y1="244" x2="314" y2="244" marker-end="url(#a4)"/>
+          <text class="sm" x="267" y="233" text-anchor="middle">has many</text>
+
+          <polyline class="link" points="610,200 660,200 660,95 704,95" marker-end="url(#a4)"/>
+          <text class="sm" x="668" y="150">has many</text>
+
+          <line class="link" x1="610" y1="255" x2="704" y2="255" marker-end="url(#a4)"/>
+          <text class="sm" x="657" y="244" text-anchor="middle">has many</text>
+
+          <line class="link" x1="465" y1="342" x2="465" y2="394" marker-end="url(#a4)"/>
+          <text class="sm" x="477" y="372">has many</text>
+        </svg>
+      </div>
+      <figcaption>
+        Turn on row level security on all five tables from the start. Even with a
+        single owner it stops a leaked public key from exposing every member's
+        phone number — and it is what makes growing into a multi-gym product a
+        config change rather than a rewrite.
+      </figcaption>
+    </figure>
+
+    <ul class="notes">
+      <li><span class="k">Branch scoping</span><span><code>members.branch_id</code> is the only multi-branch concession needed. Dashboard counts and the member list filter on it; the reminder job ignores it.</span></li>
+      <li><span class="k">Discounts</span><span>Stored as type plus value on the member (the standing arrangement) and again on each payment (what was actually applied), so changing a rate later doesn't rewrite history.</span></li>
+      <li><span class="k">Not in v1</span><span>Member logins, online payment collection, attendance, trainers. The <code>branches</code> table and RLS are the seams those grow along.</span></li>
+    </ul>
+  </section>
+
+</div>
+
+</body></html>
